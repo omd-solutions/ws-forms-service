@@ -61,6 +61,10 @@ public class SimpleFormsService implements FormsService {
     }
 
     void addFormField(Field field, Map<String, SectionDefinition> sections) throws EntityConfigurationException {
+        FormsIgnore ignoreAnnotation = field.getAnnotation(FormsIgnore.class);
+        if(ignoreAnnotation != null) {
+            return;
+        }
         FormFieldDefinition definition = createFormFieldDefinition(field);
         String section = definition.getSection();
         SectionDefinition sectionDefinition = sections.get(section);
