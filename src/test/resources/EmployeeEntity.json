@@ -1,0 +1,40 @@
+{
+  "name" : "com.omd.ws.forms.EmployeeEntity",
+  "sectionType" : "PANELS",
+  "sections" : [ {
+    "orderIndex" : 0,
+    "caption" : "Personal Details",
+    "fields" : [ {
+      "fieldName" : "firstName",
+      "caption" : "First Name",
+      "columns" : 6,
+      "controlType" : "TEXT"
+    }, {
+      "fieldName" : "lastName",
+      "caption" : "Last Name",
+      "columns" : 6,
+      "controlType" : "TEXT"
+    }, {
+      "fieldName" : "address",
+      "caption" : "Address",
+      "columns" : 12,
+      "controlType" : "TEXT"
+    }, {
+      "fieldName" : "country",
+      "caption" : "Country",
+      "columns" : 6,
+      "controlType" : "SELECT",
+      "displayField" : "name",
+      "values" : [ {
+        "id" : "uk",
+        "name" : "United Kingdom"
+      }, {
+        "id" : "us",
+        "name" : "United States"
+      }, {
+        "id" : "france",
+        "name" : "France"
+      } ]
+    } ]
+  } ]
+}

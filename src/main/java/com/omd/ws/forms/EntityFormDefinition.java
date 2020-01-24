@@ -13,4 +13,16 @@ public class EntityFormDefinition {
         this.sectionType = sectionType;
         this.sections = sections;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public SectionType getSectionType() {
+        return sectionType;
+    }
+
+    public List<SectionDefinition> getSections() {
+        return sections;
+    }
 }
