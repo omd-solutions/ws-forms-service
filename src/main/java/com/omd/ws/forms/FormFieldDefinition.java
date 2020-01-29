@@ -88,6 +88,14 @@ public class FormFieldDefinition {
         return withSpaces.substring(0, 1).toUpperCase() + withSpaces.substring(1);
     }
 
+    protected boolean isSimpleType(Field field) {
+        Class<?> type = field.getType();
+        return type == String.class ||
+                BOOLEAN_CLASSES.contains(type) ||
+                DATE_TIME_CLASSES.contains(type) ||
+                NUMBER_CLASSES.contains(type);
+    }
+
     public String getFieldName() {
         return fieldName;
     }

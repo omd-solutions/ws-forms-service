@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Select {
 
+    String idField() default "";
     String displayField() default "";
     Class<? extends SelectValueProvider> valueProvider();
 
