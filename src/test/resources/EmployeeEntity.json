@@ -24,6 +24,7 @@
       "caption" : "Country",
       "columns" : 6,
       "controlType" : "SELECT",
+      "idField" : "id",
       "displayField" : "name",
       "values" : [ {
         "id" : "uk",

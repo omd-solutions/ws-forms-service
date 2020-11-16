@@ -12,7 +12,7 @@ public class EmployeeEntity {
     @FormField(section = "personalDetails")
     private String address;
     @FormField(columns = 6, section = "personalDetails")
-    @Select(displayField = "name", valueProvider = CountryValueProvider.class)
+    @Select(valueProvider = CountryValueProvider.class)
     private Country country;
 
 
