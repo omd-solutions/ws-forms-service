@@ -28,7 +28,7 @@ public class EntityFormDefinitionTests {
     @Test
     void testEmployeeEntity() throws Exception  {
         String expectedJson = IOUtils.resourceToString("/EmployeeEntity.json", StandardCharsets.UTF_8);
-        EntityFormDefinition actual = formsService.generateEntityForm(EmployeeEntity.class);
-        assertEquals(expectedJson, mapper.writeValueAsString(actual));
+        EntityFormConfiguration actual = new EntityFormConfiguration(EmployeeEntity.class);
+        assertEquals(expectedJson, mapper.writeValueAsString(actual.getDefinition()));
     }
 }

@@ -6,7 +6,6 @@ public enum ControlType {
     TEXT_AREA,
     HTML_EDITOR,
     SELECT,
-    FILTERED_SELECT,
     DATE,
     TIME,
     DATE_TIME,

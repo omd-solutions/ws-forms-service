@@ -1,6 +1,8 @@
 package com.omd.ws.forms;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -39,6 +41,7 @@ public class FormFieldDefinition {
     ));
 
     private String fieldName;
+    private Class<?> fieldType;
     private String caption;
     private int columns;
     private ControlType controlType;
@@ -50,23 +53,23 @@ public class FormFieldDefinition {
 
     public FormFieldDefinition(Field field, ControlType controlType) throws EntityConfigurationException {
         this.fieldName = field.getName();
+        this.fieldType = field.getType();
         if(controlType != null) {
             this.controlType = controlType;
         } else {
-            Class<?> type = field.getType();
-            if (type == String.class) {
+            if (fieldType == String.class) {
                 this.controlType = TEXT;
             }
-            if (NUMBER_CLASSES.contains(type)) {
+            if (NUMBER_CLASSES.contains(fieldType)) {
                 this.controlType = NUMBER;
             }
-            if (DATE_TIME_CLASSES.contains(type)) {
+            if (DATE_TIME_CLASSES.contains(fieldType)) {
                 this.controlType = DATE_TIME;
             }
-            if (type == LocalDate.class) {
+            if (fieldType == LocalDate.class) {
                 this.controlType = DATE;
             }
-            if (BOOLEAN_CLASSES.contains(type)) {
+            if (BOOLEAN_CLASSES.contains(fieldType)) {
                 this.controlType = CHECKBOX;
             }
             if (this.controlType == null) {
@@ -88,12 +91,59 @@ public class FormFieldDefinition {
         return withSpaces.substring(0, 1).toUpperCase() + withSpaces.substring(1);
     }
 
-    protected boolean isSimpleType(Field field) {
-        Class<?> type = field.getType();
-        return type == String.class ||
-                BOOLEAN_CLASSES.contains(type) ||
-                DATE_TIME_CLASSES.contains(type) ||
-                NUMBER_CLASSES.contains(type);
+    protected boolean isSimpleType() {
+        return fieldType == String.class ||
+                BOOLEAN_CLASSES.contains(fieldType) ||
+                DATE_TIME_CLASSES.contains(fieldType) ||
+                NUMBER_CLASSES.contains(fieldType);
+    }
+
+    protected Object wrangleValue(String stringValue) {
+        if(stringValue == null) {
+            return null;
+        }
+        if(String.class.equals(fieldType)) {
+            return stringValue;
+        }
+        if(Set.of(Boolean.class, boolean.class).contains(fieldType)) {
+            return Boolean.valueOf(stringValue);
+        }
+        if(Set.of(Integer.class, int.class).contains(fieldType)) {
+            return Integer.valueOf(stringValue);
+        }
+        if(Set.of(Double.class, double.class).contains(fieldType)) {
+            return Double.valueOf(stringValue);
+        }
+        if(Set.of(Float.class, float.class).contains(fieldType)) {
+            return Float.valueOf(stringValue);
+        }
+        if(Set.of(Short.class, short.class).contains(fieldType)) {
+            return Short.valueOf(stringValue);
+        }
+        if(Set.of(Boolean.class, boolean.class).contains(fieldType)) {
+            return Boolean.valueOf(stringValue);
+        }
+        if(Date.class.equals(fieldType)) {
+            try {
+                return DateFormat.getInstance().parse(stringValue);
+            } catch (ParseException e) {
+                throw new RuntimeException(String.format("Unexpected parse exception while wrangling date string %s", stringValue), e);
+            }
+        }
+        if(LocalDate.class.equals(fieldType)) {
+            return LocalDate.parse(stringValue);
+        }
+        if(LocalDateTime.class.equals(fieldType)) {
+            return LocalDateTime.parse(stringValue);
+        }
+        if(ZonedDateTime.class.equals(fieldType)) {
+            return ZonedDateTime.parse(stringValue);
+        }
+        throw new RuntimeException(String.format("Unable to wrangle string values to type %s", fieldType.getName()));
+    }
+
+    protected Class<?> getFieldType() {
+        return fieldType;
     }
 
     public String getFieldName() {
