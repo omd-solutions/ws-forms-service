@@ -21,10 +21,7 @@ public class SelectDefinition extends PojoFieldDefinition {
     }
 
     public Object getValue(String idValue) {
-        if(isPojoField()) {
-            return getValues().stream().filter(v -> idValue.equals(getIdFieldValueAsString(v))).findFirst().orElse(null);
-        } else {
-            return wrangleValue(idValue);
-        }
+        List<?> values = getValues();
+        return findValue(values, idValue);
     }
 }

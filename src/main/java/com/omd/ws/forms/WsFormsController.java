@@ -19,9 +19,8 @@ public class WsFormsController {
         return formsService.getEntityFormDefinition(entity);
     }
 
-    @RequestMapping(value = "/api/forms/{entity}/{fieldName}", method = RequestMethod.POST)
-    public List<?> getFieldOptions(@PathVariable String entity, @PathVariable String fieldName,
-                                                @RequestBody Map<String, String> fieldValues) {
-        return formsService.getFieldOptions(entity, fieldName, fieldValues);
+    @RequestMapping(value = "/api/forms/{entity}/options", method = RequestMethod.POST)
+    public Map<String, List<?>> getFieldOptions(@PathVariable String entity, @RequestBody Map<String, String> fieldValues) {
+        return formsService.getFieldOptions(entity, fieldValues);
     }
 }

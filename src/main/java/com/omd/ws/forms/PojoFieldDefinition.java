@@ -2,6 +2,7 @@ package com.omd.ws.forms;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -98,12 +99,20 @@ public abstract class PojoFieldDefinition extends FormFieldDefinition {
         return idFieldName != null;
     }
 
-    protected String getIdFieldValueAsString(Object pojo) {
-        return getFieldValueAsString("id", idField, pojo);
-    }
-
-    protected String getDisplayFieldValueAsString(Object pojo) {
-        return getFieldValueAsString("display", displayField, pojo);
+    protected Object findValue(List<?> values, String idValue) {
+        if (values == null) {
+            return null;
+        }
+        return values.stream()
+                .filter(v -> {
+                    if (isPojoField()) {
+                        return idValue.equals(getFieldValueAsString("id", idField, v));
+                    } else {
+                        return wrangleValue(idValue).equals(v);
+                    }
+                })
+                .findFirst()
+                .orElse(null);
     }
 
     String getFieldValueAsString(String fieldName, Field field, Object pojo) {

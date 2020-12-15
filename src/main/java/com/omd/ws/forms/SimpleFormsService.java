@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.emptyList;
+
 @Service
 public class SimpleFormsService implements FormsService {
 
@@ -19,23 +21,26 @@ public class SimpleFormsService implements FormsService {
 
     @Override
     public EntityFormDefinition getEntityFormDefinition(String entityName) {
-        return getEntityFormConfiguration(entityName).getDefinition();
+        return getEntityFormConfiguration(entityName).getFormDefinition();
     }
 
     @Override
-    public List<?> getFieldOptions(String entity, String fieldName, Map<String, String> fieldValues) {
+    public Map<String, List<?>> getFieldOptions(String entity, Map<String, String> fieldValues) {
         EntityFormConfiguration config = getEntityFormConfiguration(entity);
-        FormFieldDefinition fieldDef = config.getFieldDefinition(fieldName);
-        if(fieldDef instanceof FilteredSelectDefinition) {
-            FilteredSelectDefinition filteredSelectDef = (FilteredSelectDefinition) fieldDef;
+        List<FilteredSelectDefinition> filteredSelectDefs = config.getFieldDefinitions(FilteredSelectDefinition.class);
+        Map<String, List<?>> results = new HashMap<>(filteredSelectDefs.size());
+        for(FilteredSelectDefinition filteredSelectDef : filteredSelectDefs) {
             Object resolvedFilterValue = resolveFieldValue(config, filteredSelectDef.getFilteredBy(), fieldValues);
-            return filteredSelectDef.getValues(resolvedFilterValue);
-        } else {
-            throw new RuntimeException(String.format("The field %s is not defined as a filtered select control, values should have been provided in the original form config", fieldName));
+            List<?> options = resolvedFilterValue != null ? filteredSelectDef.getValues(resolvedFilterValue) : emptyList();
+            results.put(filteredSelectDef.getFieldName(), options);
         }
+        return results;
     }
 
     Object resolveFieldValue(EntityFormConfiguration config, String fieldName, Map<String, String> fieldValues) {
+        if(fieldValues.get(fieldName) == null) {
+            return null;
+        }
         FormFieldDefinition fieldDef = config.getFieldDefinition(fieldName);
         if(fieldDef instanceof SelectDefinition) {
             SelectDefinition selectDef = (SelectDefinition) fieldDef;

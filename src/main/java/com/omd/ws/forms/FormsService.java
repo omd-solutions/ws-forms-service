@@ -9,5 +9,5 @@ public interface FormsService {
 
     EntityFormDefinition getEntityFormDefinition(String entityName);
 
-    List<?> getFieldOptions(String entity, String fieldName, Map<String, String> fieldValues);
+    Map<String, List<?>> getFieldOptions(String entity, Map<String, String> fieldValues);
 }

@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 class EntityFormConfiguration {
 
     private String entityName;
-    private final EntityFormDefinition definition;
+    private final EntityFormDefinition formDefinition;
     private final Map<String, FormFieldDefinition> fieldDefinitions = new HashMap<>();
 
     private static final Set<Class<?>> FIELD_ANNOTATION_CLASSES = new HashSet<>(Arrays.asList(
@@ -48,7 +48,7 @@ class EntityFormConfiguration {
             }
         }
 
-        definition = new EntityFormDefinition(entityName, sectionType, sections.values().stream()
+        formDefinition = new EntityFormDefinition(entityName, sectionType, sections.values().stream()
                 .sorted(comparingInt(SectionDefinition::getOrderIndex))
                 .collect(toList()));
     }
@@ -98,12 +98,15 @@ class EntityFormConfiguration {
         return entityName;
     }
 
-    EntityFormDefinition getDefinition() {
-        return definition;
+    EntityFormDefinition getFormDefinition() {
+        return formDefinition;
     }
 
-    List<FormFieldDefinition> getFieldDefinitions() {
-        return new ArrayList<>(fieldDefinitions.values());
+    <T extends FormFieldDefinition> List<T> getFieldDefinitions(Class<T> formFieldClass) {
+        return fieldDefinitions.values().stream()
+                .filter(f -> f.getClass() == formFieldClass)
+                .map(f -> ((T) f))
+                .collect(toList());
     }
 
     FormFieldDefinition getFieldDefinition(String fieldName) {

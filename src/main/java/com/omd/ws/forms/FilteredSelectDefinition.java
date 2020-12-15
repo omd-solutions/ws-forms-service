@@ -27,10 +27,7 @@ public class FilteredSelectDefinition extends PojoFieldDefinition {
     }
 
     public Object getValue(String idValue, Object filter) {
-        if(isPojoField()) {
-            return getValues(filter).stream().filter(v -> idValue.equals(getIdFieldValueAsString(v))).findFirst().orElse(null);
-        } else {
-            return wrangleValue(idValue);
-        }
+        List<?> values = getValues(filter);
+        return findValue(values, idValue);
     }
 }
