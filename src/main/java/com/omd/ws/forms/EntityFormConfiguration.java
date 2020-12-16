@@ -39,18 +39,23 @@ class EntityFormConfiguration {
             sections.put(NO_SECTION, new SectionDefinition(0, NO_SECTION));
         }
         Field[] fields = entityClass.getDeclaredFields();
+        Set<String> filterFields = new HashSet<>();
         for (Field field : fields) {
             FormsIgnore ignoreAnnotation = field.getAnnotation(FormsIgnore.class);
             if (ignoreAnnotation == null) {
                 FormFieldDefinition fieldDefinition = createFormFieldDefinition(field);
                 addFormField(fieldDefinition, sections);
                 fieldDefinitions.put(fieldDefinition.getFieldName(), fieldDefinition);
+                if(fieldDefinition instanceof FilteredSelectDefinition) {
+                    String filteredBy = ((FilteredSelectDefinition) fieldDefinition).getFilteredBy();
+                    filterFields.add(filteredBy);
+                }
             }
         }
 
         formDefinition = new EntityFormDefinition(entityName, sectionType, sections.values().stream()
                 .sorted(comparingInt(SectionDefinition::getOrderIndex))
-                .collect(toList()));
+                .collect(toList()), filterFields);
     }
 
     void addFormField(FormFieldDefinition fieldDefinition, Map<String, SectionDefinition> sections) throws EntityConfigurationException {
