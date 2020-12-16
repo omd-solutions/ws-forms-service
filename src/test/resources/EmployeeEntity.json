@@ -1,7 +1,6 @@
 {
   "name" : "com.omd.ws.forms.EmployeeEntity",
-  "sectionType" : "PANELS",
-  "sections" : [ {
+  "panels" : [ {
     "orderIndex" : 0,
     "caption" : "Personal Details",
     "fields" : [ {
