@@ -1,39 +1,47 @@
 {
   "name" : "com.omd.ws.forms.EmployeeEntity",
-  "panels" : [ {
+  "tabs" : [ {
     "orderIndex" : 0,
-    "caption" : "Personal Details",
-    "fields" : [ {
-      "fieldName" : "firstName",
-      "caption" : "First Name",
-      "columns" : 6,
-      "controlType" : "TEXT"
-    }, {
-      "fieldName" : "lastName",
-      "caption" : "Last Name",
-      "columns" : 6,
-      "controlType" : "TEXT"
-    }, {
-      "fieldName" : "address",
-      "caption" : "Address",
-      "columns" : 12,
-      "controlType" : "TEXT"
-    }, {
-      "fieldName" : "country",
-      "caption" : "Country",
-      "columns" : 6,
-      "controlType" : "SELECT",
-      "idField" : "id",
-      "displayField" : "name",
-      "values" : [ {
-        "id" : "uk",
-        "name" : "United Kingdom"
+    "caption" : "NO_TAB",
+    "panels" : [ {
+      "orderIndex" : 0,
+      "caption" : "Personal Details",
+      "fields" : [ {
+        "fieldName" : "firstName",
+        "caption" : "First Name",
+        "columns" : 6,
+        "controlType" : "TEXT",
+        "tab" : "NO_TAB"
       }, {
-        "id" : "us",
-        "name" : "United States"
+        "fieldName" : "lastName",
+        "caption" : "Last Name",
+        "columns" : 6,
+        "controlType" : "TEXT",
+        "tab" : "NO_TAB"
       }, {
-        "id" : "france",
-        "name" : "France"
+        "fieldName" : "address",
+        "caption" : "Address",
+        "columns" : 12,
+        "controlType" : "TEXT",
+        "tab" : "NO_TAB"
+      }, {
+        "fieldName" : "country",
+        "caption" : "Country",
+        "columns" : 6,
+        "controlType" : "SELECT",
+        "tab" : "NO_TAB",
+        "idField" : "id",
+        "displayField" : "name",
+        "values" : [ {
+          "id" : "uk",
+          "name" : "United Kingdom"
+        }, {
+          "id" : "us",
+          "name" : "United States"
+        }, {
+          "id" : "france",
+          "name" : "France"
+        } ]
       } ]
     } ]
   } ],

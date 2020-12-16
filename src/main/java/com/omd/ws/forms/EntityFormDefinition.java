@@ -6,12 +6,12 @@ import java.util.Set;
 public class EntityFormDefinition {
 
     private String name;
-    private List<PanelDefinition> panels;
+    private List<TabDefinition> tabs;
     private Set<String> filterFields;
 
-    EntityFormDefinition(String name, List<PanelDefinition> panels, Set<String> filterFields) {
+    EntityFormDefinition(String name, List<TabDefinition> tabs, Set<String> filterFields) {
         this.name = name;
-        this.panels = panels;
+        this.tabs = tabs;
         this.filterFields = filterFields;
     }
 
@@ -19,8 +19,8 @@ public class EntityFormDefinition {
         return name;
     }
 
-    public List<PanelDefinition> getPanels() {
-        return panels;
+    public List<TabDefinition> getTabs() {
+        return tabs;
     }
 
     public Set<String> getFilterFields() {

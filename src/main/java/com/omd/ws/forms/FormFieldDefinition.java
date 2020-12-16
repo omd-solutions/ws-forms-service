@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 
 import static com.omd.ws.forms.ControlType.*;
 import static com.omd.ws.forms.Conventions.NO_PANEL;
+import static com.omd.ws.forms.Conventions.NO_TAB;
 import static java.util.regex.Pattern.compile;
 
 public class FormFieldDefinition {
@@ -45,7 +46,8 @@ public class FormFieldDefinition {
     private String caption;
     private int columns;
     private ControlType controlType;
-    private String section;
+    private String panel;
+    private String tab;
 
     public FormFieldDefinition(Field field) throws EntityConfigurationException {
         this(field, null);
@@ -79,7 +81,8 @@ public class FormFieldDefinition {
         FormField formField = field.getAnnotation(FormField.class);
         this.caption = calculateFieldCaption(field, formField);
         this.columns = formField == null ? 12 : formField.columns();
-        this.section = formField == null ? NO_PANEL : formField.panel();
+        this.panel = formField == null ? NO_PANEL : formField.panel();
+        this.tab = formField == null ? NO_TAB : formField.tab();
     }
 
     String calculateFieldCaption(Field field, FormField formField) {
@@ -162,7 +165,11 @@ public class FormFieldDefinition {
         return controlType;
     }
 
-    String getSection() {
-        return section;
+    String getPanel() {
+        return panel;
+    }
+
+    public String getTab() {
+        return tab;
     }
 }
