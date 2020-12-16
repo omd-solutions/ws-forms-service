@@ -79,7 +79,7 @@ public class FormFieldDefinition {
         FormField formField = field.getAnnotation(FormField.class);
         this.caption = calculateFieldCaption(field, formField);
         this.columns = formField == null ? 12 : formField.columns();
-        this.section = formField == null ? NO_PANEL : formField.section();
+        this.section = formField == null ? NO_PANEL : formField.panel();
     }
 
     String calculateFieldCaption(Field field, FormField formField) {

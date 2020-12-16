@@ -5,13 +5,13 @@ package com.omd.ws.forms;
 })
 public class EmployeeEntity {
 
-    @FormField(columns = 6, section = "personalDetails")
+    @FormField(columns = 6, panel = "personalDetails")
     private String firstName;
-    @FormField(columns = 6, section = "personalDetails")
+    @FormField(columns = 6, panel = "personalDetails")
     private String lastName;
-    @FormField(section = "personalDetails")
+    @FormField(panel = "personalDetails")
     private String address;
-    @FormField(columns = 6, section = "personalDetails")
+    @FormField(columns = 6, panel = "personalDetails")
     @Select(valueProvider = CountryValueProvider.class)
     private Country country;
 

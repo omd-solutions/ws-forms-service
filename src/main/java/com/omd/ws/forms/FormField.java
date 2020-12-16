@@ -13,5 +13,5 @@ public @interface FormField {
 
     String caption() default "";
     int columns() default 12;
-    String section() default NO_PANEL;
+    String panel() default NO_PANEL;
 }
