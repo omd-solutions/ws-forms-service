@@ -1,7 +1,7 @@
 package com.omd.ws.forms;
 
-@EntityForm(sections = {
-        @Section(name = "personalDetails", caption = "Personal Details")
+@EntityForm(panels = {
+        @Panel(name = "personalDetails", caption = "Personal Details")
 })
 public class EmployeeEntity {
 

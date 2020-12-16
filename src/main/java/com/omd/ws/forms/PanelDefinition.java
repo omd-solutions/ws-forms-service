@@ -3,13 +3,13 @@ package com.omd.ws.forms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionDefinition {
+public class PanelDefinition {
 
     private int orderIndex;
     private String caption;
     private List<FormFieldDefinition> fields = new ArrayList<>();
 
-    SectionDefinition(int orderIndex, String caption) {
+    PanelDefinition(int orderIndex, String caption) {
         this.orderIndex = orderIndex;
         this.caption = caption;
     }

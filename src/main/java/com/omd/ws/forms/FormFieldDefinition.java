@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 import static com.omd.ws.forms.ControlType.*;
-import static com.omd.ws.forms.Conventions.NO_SECTION;
+import static com.omd.ws.forms.Conventions.NO_PANEL;
 import static java.util.regex.Pattern.compile;
 
 public class FormFieldDefinition {
@@ -79,7 +79,7 @@ public class FormFieldDefinition {
         FormField formField = field.getAnnotation(FormField.class);
         this.caption = calculateFieldCaption(field, formField);
         this.columns = formField == null ? 12 : formField.columns();
-        this.section = formField == null ? NO_SECTION : formField.section();
+        this.section = formField == null ? NO_PANEL : formField.section();
     }
 
     String calculateFieldCaption(Field field, FormField formField) {

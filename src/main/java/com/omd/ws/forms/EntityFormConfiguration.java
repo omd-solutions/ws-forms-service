@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.omd.ws.forms.Conventions.NO_SECTION;
+import static com.omd.ws.forms.Conventions.NO_PANEL;
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
 
@@ -23,20 +23,18 @@ class EntityFormConfiguration {
 
     EntityFormConfiguration(Class<?> entityClass) throws EntityConfigurationException {
         entityName = entityClass.getName();
-        SectionType sectionType = SectionType.PANELS;
-        Map<String, SectionDefinition> sections = new HashMap<>();
+        Map<String, PanelDefinition> panels = new HashMap<>();
         EntityForm entityForm = entityClass.getDeclaredAnnotation(EntityForm.class);
         if (entityForm != null) {
             if (!entityForm.name().isEmpty()) {
                 entityName = entityForm.name();
             }
-            sectionType = entityForm.sectionType();
-            for (int i = 0; i < entityForm.sections().length; i++) {
-                sections.put(entityForm.sections()[i].name(), new SectionDefinition(i, entityForm.sections()[i].caption()));
+            for (int i = 0; i < entityForm.panels().length; i++) {
+                panels.put(entityForm.panels()[i].name(), new PanelDefinition(i, entityForm.panels()[i].caption()));
             }
         }
-        if (sections.isEmpty()) {
-            sections.put(NO_SECTION, new SectionDefinition(0, NO_SECTION));
+        if (panels.isEmpty()) {
+            panels.put(NO_PANEL, new PanelDefinition(0, NO_PANEL));
         }
         Field[] fields = entityClass.getDeclaredFields();
         Set<String> filterFields = new HashSet<>();
@@ -44,7 +42,7 @@ class EntityFormConfiguration {
             FormsIgnore ignoreAnnotation = field.getAnnotation(FormsIgnore.class);
             if (ignoreAnnotation == null) {
                 FormFieldDefinition fieldDefinition = createFormFieldDefinition(field);
-                addFormField(fieldDefinition, sections);
+                addFormField(fieldDefinition, panels);
                 fieldDefinitions.put(fieldDefinition.getFieldName(), fieldDefinition);
                 if(fieldDefinition instanceof FilteredSelectDefinition) {
                     String filteredBy = ((FilteredSelectDefinition) fieldDefinition).getFilteredBy();
@@ -53,22 +51,22 @@ class EntityFormConfiguration {
             }
         }
 
-        formDefinition = new EntityFormDefinition(entityName, sectionType, sections.values().stream()
-                .sorted(comparingInt(SectionDefinition::getOrderIndex))
+        formDefinition = new EntityFormDefinition(entityName, panels.values().stream()
+                .sorted(comparingInt(PanelDefinition::getOrderIndex))
                 .collect(toList()), filterFields);
     }
 
-    void addFormField(FormFieldDefinition fieldDefinition, Map<String, SectionDefinition> sections) throws EntityConfigurationException {
+    void addFormField(FormFieldDefinition fieldDefinition, Map<String, PanelDefinition> sections) throws EntityConfigurationException {
         String section = fieldDefinition.getSection();
-        SectionDefinition sectionDefinition = sections.get(section);
-        if (sectionDefinition == null) {
-            if (section.equals(NO_SECTION)) {
+        PanelDefinition panelDefinition = sections.get(section);
+        if (panelDefinition == null) {
+            if (section.equals(NO_PANEL)) {
                 throw new EntityConfigurationException(String.format("Unable to place field %s, you must specify a section for each field if the entity defines sections", fieldDefinition.getFieldName()));
             } else {
                 throw new EntityConfigurationException(String.format("Unable to place field %s, the specified section %s does not exist on this entity", fieldDefinition.getFieldName(), section));
             }
         }
-        sectionDefinition.addField(fieldDefinition);
+        panelDefinition.addField(fieldDefinition);
     }
 
     FormFieldDefinition createFormFieldDefinition(Field field) throws EntityConfigurationException {

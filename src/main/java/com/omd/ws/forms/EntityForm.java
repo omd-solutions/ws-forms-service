@@ -11,7 +11,5 @@ public @interface EntityForm {
 
     String name() default "";
 
-    SectionType sectionType() default SectionType.PANELS;
-
-    Section [] sections() default {};
+    Panel[] panels() default {};
 }
