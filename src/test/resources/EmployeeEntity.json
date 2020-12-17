@@ -25,7 +25,16 @@
         "columns" : 6,
         "controlType" : "TEXT",
         "validationRegex" : "/0[0-9]{10}/",
-        "validationMessage" : "Must be 11 digits and start with a 0"
+        "validationMessage" : "Must be 11 digits and start with a 0",
+        "masked" : false
+      }, {
+        "fieldName" : "password",
+        "caption" : "Password",
+        "columns" : 6,
+        "controlType" : "TEXT",
+        "validationRegex" : "^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#$%&? \"]).*$",
+        "validationMessage" : "Must be at least 8 characters with at least 1 number, capital and special char",
+        "masked" : true
       }, {
         "fieldName" : "country",
         "caption" : "Country",

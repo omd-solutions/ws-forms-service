@@ -8,6 +8,7 @@ public class TextDefinition extends FormFieldDefinition {
 
     private String validationRegex;
     private String validationMessage;
+    private boolean masked;
 
     public TextDefinition(Field field, Text annotation) throws EntityConfigurationException {
         super(field, TEXT);
@@ -15,6 +16,7 @@ public class TextDefinition extends FormFieldDefinition {
             this.validationRegex = annotation.validationRegex();
             this.validationMessage = annotation.validationMessage();
         }
+        this.masked = annotation.masked();
     }
 
     public String getValidationRegex() {
@@ -23,5 +25,9 @@ public class TextDefinition extends FormFieldDefinition {
 
     public String getValidationMessage() {
         return validationMessage;
+    }
+
+    public boolean isMasked() {
+        return masked;
     }
 }

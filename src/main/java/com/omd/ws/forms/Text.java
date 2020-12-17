@@ -11,5 +11,6 @@ public @interface Text {
 
     String validationRegex() default "";
     String validationMessage() default "";
+    boolean masked() default false;
 
 }
