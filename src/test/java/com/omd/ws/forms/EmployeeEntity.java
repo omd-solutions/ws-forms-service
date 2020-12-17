@@ -12,6 +12,9 @@ public class EmployeeEntity {
     @FormField(panel = "personalDetails")
     private String address;
     @FormField(columns = 6, panel = "personalDetails")
+    @Text(validationRegex = "/0[0-9]{10}/", validationMessage = "Must be 11 digits and start with a 0")
+    private String phoneNumber;
+    @FormField(columns = 6, panel = "personalDetails")
     @Select(valueProvider = CountryValueProvider.class)
     private Country country;
 
@@ -38,6 +41,14 @@ public class EmployeeEntity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Country getCountry() {

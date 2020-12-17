@@ -17,6 +17,7 @@ class EntityFormConfiguration {
     private final Map<String, FormFieldDefinition> fieldDefinitions = new HashMap<>();
 
     private static final Set<Class<?>> FIELD_ANNOTATION_CLASSES = new HashSet<>(Arrays.asList(
+            Text.class,
             TextEditor.class,
             Select.class,
             FilteredSelect.class
@@ -111,6 +112,9 @@ class EntityFormConfiguration {
     FormFieldDefinition createFormFieldDefinition(Field field) throws EntityConfigurationException {
         Annotation fieldAnnotation = getFieldAnnotation(field);
         if (fieldAnnotation != null) {
+            if (fieldAnnotation instanceof Text) {
+                return new TextDefinition(field, (Text) fieldAnnotation);
+            }
             if (fieldAnnotation instanceof TextEditor) {
                 TextEditor textEditor = (TextEditor) fieldAnnotation;
                 return new FormFieldDefinition(field, textEditor.html() ? ControlType.HTML_EDITOR : ControlType.TEXT_AREA);

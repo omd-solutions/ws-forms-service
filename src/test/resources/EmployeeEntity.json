@@ -1,35 +1,36 @@
 {
   "name" : "com.omd.ws.forms.EmployeeEntity",
   "tabs" : [ {
-    "orderIndex" : 0,
     "caption" : "NO_TAB",
     "panels" : [ {
-      "orderIndex" : 0,
       "caption" : "Personal Details",
       "fields" : [ {
         "fieldName" : "firstName",
         "caption" : "First Name",
         "columns" : 6,
-        "controlType" : "TEXT",
-        "tab" : "NO_TAB"
+        "controlType" : "TEXT"
       }, {
         "fieldName" : "lastName",
         "caption" : "Last Name",
         "columns" : 6,
-        "controlType" : "TEXT",
-        "tab" : "NO_TAB"
+        "controlType" : "TEXT"
       }, {
         "fieldName" : "address",
         "caption" : "Address",
         "columns" : 12,
+        "controlType" : "TEXT"
+      }, {
+        "fieldName" : "phoneNumber",
+        "caption" : "Phone Number",
+        "columns" : 6,
         "controlType" : "TEXT",
-        "tab" : "NO_TAB"
+        "validationRegex" : "/0[0-9]{10}/",
+        "validationMessage" : "Must be 11 digits and start with a 0"
       }, {
         "fieldName" : "country",
         "caption" : "Country",
         "columns" : 6,
         "controlType" : "SELECT",
-        "tab" : "NO_TAB",
         "idField" : "id",
         "displayField" : "name",
         "values" : [ {

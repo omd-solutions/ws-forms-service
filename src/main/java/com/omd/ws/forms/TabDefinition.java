@@ -14,7 +14,7 @@ public class TabDefinition {
         this.caption = caption;
     }
 
-    public int getOrderIndex() {
+    int getOrderIndex() {
         return orderIndex;
     }
 

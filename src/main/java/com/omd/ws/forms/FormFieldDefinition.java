@@ -169,7 +169,7 @@ public class FormFieldDefinition {
         return panel;
     }
 
-    public String getTab() {
+    String getTab() {
         return tab;
     }
 }
